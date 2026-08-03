@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Workflow Tool — Simplified Technical English</title>
+<style>
+  :root {
+    --ivory:   #FAF9F5;
+    --paper:   #FFFFFF;
+    --slate:   #141413;
+    --clay:    #D97757;
+    --clay-d:  #B85C3E;
+    --oat:     #E3DACC;
+    --olive:   #788C5D;
+    --rust:    #B04A3F;
+    --gray-100:#F0EEE6;
+    --gray-300:#D1CFC5;
+    --gray-500:#87867F;
+    --gray-700:#3D3D3A;
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans:  system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono:  ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--ivory);
+    color: var(--gray-700);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    padding: 56px 24px 120px;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 48px;
+  }
+  @media (max-width: 920px) { .page { grid-template-columns: 1fr; } nav { display: none; } }
+
+  nav {
+    position: sticky;
+    top: 32px;
+    align-self: start;
+    font-size: 13px;
+  }
+  nav .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 12px;
+  }
+  nav a {
+    display: block;
+    padding: 5px 0 5px 12px;
+    border-left: 2px solid var(--gray-300);
+    color: var(--gray-700);
+    text-decoration: none;
+  }
+  nav a:hover { color: var(--slate); border-color: var(--slate); }
+  nav .note {
+    margin-top: 28px;
+    border-top: 1px solid var(--gray-300);
+    padding-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    line-height: 1.6;
+  }
+
+  header { margin-bottom: 12px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(28px, 4.5vw, 38px);
+    color: var(--slate);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .tldr {
+    border: 1.5px solid var(--gray-300);
+    border-left: 3px solid var(--clay);
+    border-radius: 10px;
+    background: var(--paper);
+    padding: 16px 18px;
+    margin-bottom: 8px;
+  }
+  .tldr b { color: var(--slate); }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--slate);
+    margin: 44px 0 14px;
+    scroll-margin-top: 24px;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--slate);
+    margin: 22px 0 8px;
+  }
+  p { margin-bottom: 12px; max-width: 700px; }
+  code { font-family: var(--mono); font-size: 13px; color: var(--slate); }
+
+  ol.steps, ul.plain {
+    max-width: 700px;
+    margin: 0 0 14px 22px;
+  }
+  ol.steps li, ul.plain li { margin-bottom: 6px; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 760px;
+    background: var(--paper);
+    border: 1.5px solid var(--gray-300);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 14px 0 18px;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--gray-300);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    font-weight: 500;
+  }
+  td code { white-space: nowrap; }
+
+  pre {
+    background: var(--paper);
+    border: 1.5px solid var(--gray-300);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--slate);
+    overflow-x: auto;
+    margin: 14px 0 18px;
+    max-width: 760px;
+  }
+  .cm { color: var(--gray-500); }
+  .hl { color: var(--clay); }
+
+  .callout {
+    display: flex;
+    gap: 12px;
+    border: 1.5px solid var(--oat);
+    background: rgba(227,218,204,0.35);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 18px 0;
+    font-size: 14px;
+    max-width: 730px;
+  }
+  .callout .ico { color: var(--clay); font-weight: 600; }
+  .callout.warn { border-color: rgba(176,74,63,0.4); background: rgba(176,74,63,0.06); }
+  .callout.warn .ico { color: var(--rust); }
+
+  details {
+    border: 1.5px solid var(--gray-300);
+    border-radius: 10px;
+    background: var(--paper);
+    margin: 12px 0;
+    overflow: hidden;
+    max-width: 760px;
+  }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 13px 16px;
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--slate);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before {
+    content: "▸";
+    color: var(--clay);
+    font-family: var(--sans);
+    font-size: 12px;
+    transition: transform 120ms;
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  summary .where {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-left: auto;
+  }
+  details .body { padding: 0 16px 16px; }
+  details .body p { font-size: 14px; }
+  details .body pre { margin: 10px 0 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav>
+    <div class="label">On this page</div>
+    <a href="#tldr">Summary</a>
+    <a href="#what">1 · What the tool is</a>
+    <a href="#start">2 · How to start a workflow</a>
+    <a href="#meta">3 · The script header</a>
+    <a href="#commands">4 · Script commands</a>
+    <a href="#agent-opts">5 · Agent options</a>
+    <a href="#limits">6 · Limits</a>
+    <a href="#resume">7 · Stop and resume</a>
+    <a href="#patterns">8 · Patterns</a>
+    <a href="#permission">9 · Permission rules</a>
+    <div class="note">
+      Written in ASD-STE100<br>
+      Simplified Technical English:<br>
+      short sentences · active voice ·<br>
+      one instruction per sentence
+    </div>
+  </nav>
+
+  <main>
+    <header>
+      <div class="eyebrow">Claude Code · Workflow tool · 2026-08-03</div>
+      <h1>The Workflow Tool</h1>
+      <div class="tldr" id="tldr">
+        <b>Summary</b> — The Workflow tool runs a JavaScript program that controls many agents.
+        The program starts agents, runs them at the same time, and collects their results.
+        The tool runs in the background. You get a message when it is complete.
+      </div>
+    </header>
+
+    <h2 id="what">1 · What the tool is</h2>
+    <p>The Workflow tool is a program runner. You give it a short JavaScript program. This program is the <em>script</em>.</p>
+    <p>The script starts agents. An agent is a copy of Claude that does one task. The script can start many agents at the same time.</p>
+    <p>Use a workflow for large tasks. Examples: a full code review, a large search, or a migration of many files.</p>
+
+    <h2 id="start">2 · How to start a workflow</h2>
+    <p>The tool call has five possible inputs. Use one of the first three. The other two are optional.</p>
+    <table>
+      <tr><th>Input</th><th>Function</th></tr>
+      <tr><td><code>script</code></td><td>The full script as text. Use this for a new workflow.</td></tr>
+      <tr><td><code>scriptPath</code></td><td>The path of a script file on the disk. Each run writes its script to a file. To change a workflow, change this file. Then start the tool again with this path.</td></tr>
+      <tr><td><code>name</code></td><td>The name of a saved workflow. The tool finds the script for you.</td></tr>
+      <tr><td><code>args</code></td><td>Data for the script. The script reads this data from the <code>args</code> value. Use it for paths, questions, or configuration.</td></tr>
+      <tr><td><code>resumeFromRunId</code></td><td>The identifier of an old run. The tool continues that run. See section 7.</td></tr>
+    </table>
+    <p>The tool starts and gives back a task identifier immediately. The workflow then runs in the background. Type <code>/workflows</code> to see its progress.</p>
+
+    <h2 id="meta">3 · The script header</h2>
+    <p>Each script must start with a header. The header is a simple object. It must not contain variables or calculations.</p>
+    <pre><span class="hl">export const meta</span> = {
+  name: 'review-changes',
+  description: 'Review the changed files',   <span class="cm">// shown to the user</span>
+  phases: [
+    { title: 'Find' },
+    { title: 'Verify' },
+  ],
+}</pre>
+    <p>The <code>name</code> and <code>description</code> fields are mandatory. The <code>phases</code> field is optional. Phase titles in the header must be the same as the titles in the script.</p>
+
+    <h2 id="commands">4 · Script commands</h2>
+    <p>The script is standard JavaScript. It has seven special commands. Open each item to see the details.</p>
+
+    <details open>
+      <summary>agent(prompt, options) <span class="where">start one agent</span></summary>
+      <div class="body">
+        <p>This command starts one agent. The agent does the task in the prompt. The command gives back the agent's result.</p>
+        <p>If you give a schema, the agent gives back structured data. If you do not, the agent gives back text.</p>
+        <pre>const result = await agent('Find the bugs in src/', {
+  schema: BUG_SCHEMA,
+})</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary>pipeline(items, stage1, stage2, …) <span class="where">the usual choice</span></summary>
+      <div class="body">
+        <p>This command sends each item through all the stages. Each item moves at its own speed. Item A can be in stage 3 when item B is in stage 1.</p>
+        <p>This is the fastest shape for work with more than one stage. Use it as the default.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>parallel(tasks) <span class="where">wait for all</span></summary>
+      <div class="body">
+        <p>This command runs all the tasks at the same time. It stops and waits until all the tasks are complete. This wait can make the workflow slow.</p>
+        <p>Use it only when a later stage needs all the results together. Example: remove duplicate findings before an expensive check.</p>
+        <p>A task that fails gives back <code>null</code>. Remove the <code>null</code> values before you use the results.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>workflow(name, args) <span class="where">run a child workflow</span></summary>
+      <div class="body">
+        <p>This command runs a different workflow inside this one. The child uses the same limits and the same token budget. Only one level of children is permitted.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>phase(title) and log(message) <span class="where">show progress</span></summary>
+      <div class="body">
+        <p><code>phase</code> puts the agents that follow into a named group. The user sees this group in the progress display.</p>
+        <p><code>log</code> shows a short message to the user immediately.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>args <span class="where">input data</span></summary>
+      <div class="body">
+        <p>This value holds the data from the <code>args</code> input of the tool call. It can be a list, an object, or a simple value. Use it to configure a saved workflow.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>budget <span class="where">token limit</span></summary>
+      <div class="body">
+        <p>The user can set a token target. Example: the user writes "+500k" in the prompt.</p>
+        <p>The script can read this target. <code>budget.total</code> is the target. <code>budget.spent()</code> is the quantity used. <code>budget.remaining()</code> is the quantity that remains.</p>
+        <p>The target is a hard limit. When the budget is empty, new agents do not start.</p>
+        <pre>while (budget.total &amp;&amp; budget.remaining() &gt; 50_000) {
+  <span class="cm">// start more agents</span>
+}</pre>
+      </div>
+    </details>
+
+    <div class="callout warn">
+      <span class="ico">!</span>
+      <div>The script must not use <code>Date.now()</code>, <code>Math.random()</code>, or <code>new Date()</code>. These functions break the resume function. Send times into the script through <code>args</code>.</div>
+    </div>
+
+    <h2 id="agent-opts">5 · Agent options</h2>
+    <p>Each <code>agent()</code> call can have these options. All of them are optional.</p>
+    <table>
+      <tr><th>Option</th><th>Function</th></tr>
+      <tr><td><code>schema</code></td><td>A JSON Schema. The agent must give back data that obeys this schema. The tool does the validation. Bad data causes an automatic retry.</td></tr>
+      <tr><td><code>label</code></td><td>A short name. The user sees it in the progress display.</td></tr>
+      <tr><td><code>phase</code></td><td>The name of a progress group for this agent. Use this inside a pipeline.</td></tr>
+      <tr><td><code>model</code></td><td>A different model for this agent. If you do not set it, the agent uses the session model. This is almost always correct.</td></tr>
+      <tr><td><code>effort</code></td><td>The thinking level: <code>low</code> to <code>max</code>. Use <code>low</code> for simple tasks. Use a high level for hard checks.</td></tr>
+      <tr><td><code>agentType</code></td><td>A special agent type. Example: <code>code-reviewer</code>.</td></tr>
+      <tr><td><code>isolation</code></td><td>Set to <code>worktree</code> to give the agent its own copy of the repository. Use this only when many agents change files at the same time. It is expensive.</td></tr>
+    </table>
+
+    <h2 id="limits">6 · Limits</h2>
+    <ul class="plain">
+      <li>Approximately 10 to 16 agents run at the same time. More agents wait in a queue.</li>
+      <li>One run can start a maximum of 1000 agents.</li>
+      <li>One <code>pipeline</code> or <code>parallel</code> call accepts a maximum of 4096 items.</li>
+      <li>The maximum script size is 512&nbsp;KB.</li>
+    </ul>
+
+    <h2 id="resume">7 · Stop and resume</h2>
+    <p>To continue a workflow after a stop, do these steps:</p>
+    <ol class="steps">
+      <li>Stop the run, if it is active.</li>
+      <li>Change the script file, if a change is necessary.</li>
+      <li>Start the tool again with <code>scriptPath</code> and <code>resumeFromRunId</code>.</li>
+    </ol>
+    <p>The tool keeps the results of the completed agents in a journal file. Agents with no changes give back their old results immediately. Only new or changed agents run again.</p>
+
+    <h2 id="patterns">8 · Patterns</h2>
+    <p>These shapes are not built in. They are good designs that you can put together in a script.</p>
+    <table>
+      <tr><th>Pattern</th><th>Function</th></tr>
+      <tr><td>Adversarial verify</td><td>Start three agents to attack each finding. If most of the agents reject the finding, remove it.</td></tr>
+      <tr><td>Judge panel</td><td>Make N independent solutions. Score them with judges. Keep the best one.</td></tr>
+      <tr><td>Loop until dry</td><td>Start search agents again and again. Stop when two rounds in sequence find nothing new.</td></tr>
+      <tr><td>Multi-modal sweep</td><td>Start agents that each search in a different way. One search method does not find everything.</td></tr>
+      <tr><td>Completeness critic</td><td>Start one last agent. It asks: "What is missing?" Its answer becomes the next round of work.</td></tr>
+    </table>
+
+    <h2 id="permission">9 · Permission rules</h2>
+    <p>A workflow can start many agents. It can use many tokens. For this reason, Claude must not start one without your agreement.</p>
+    <p>You give your agreement in one of these ways:</p>
+    <ul class="plain">
+      <li>Write the word <code>ultracode</code> in your prompt.</li>
+      <li>Ask for a workflow in your own words. Example: "use a workflow".</li>
+      <li>Use a skill that starts a workflow.</li>
+      <li>Ask for a saved workflow by its name.</li>
+    </ul>
+    <p>Without your agreement, Claude will describe a possible workflow. It will then ask you before it starts.</p>
+
+    <div class="callout">
+      <span class="ico">i</span>
+      <div>Note on the language: this page uses ASD-STE100 Simplified Technical English. The rules: short sentences, active voice, one instruction per sentence, and one meaning for each word.</div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

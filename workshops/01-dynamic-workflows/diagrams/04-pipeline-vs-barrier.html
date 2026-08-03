@@ -1,0 +1,81 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1360" viewBox="0 0 2000 1360" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<rect width="2000" height="1360" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Pipeline vs. barrier</text>
+<rect x="80" y="185" width="1840" height="1105" rx="30" fill="#FAFAF6"/>
+
+<!-- ============ panel 1 : pipeline ============ -->
+<text x="180" y="308" font-size="28" font-weight="600" fill="#4A4A44" font-family="'SF Mono', Menlo, monospace">pipeline() &#8212; no barriers, items never wait</text>
+
+<!-- row labels -->
+<text x="360" y="386" text-anchor="end" font-size="28" fill="#4A4A44">Item A</text>
+<text x="360" y="476" text-anchor="end" font-size="28" fill="#4A4A44">Item B</text>
+<text x="360" y="566" text-anchor="end" font-size="28" fill="#4A4A44">Item C</text>
+
+<!-- A: s1 0-3, s2 3-5, s3 5-7 -->
+<rect x="400" y="350" width="318" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="718" y="350" width="212" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="930" y="350" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+<!-- B: s1 0-6, s2 6-8, s3 8-10 -->
+<rect x="400" y="440" width="636" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="1036" y="440" width="212" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="1248" y="440" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+<!-- C: s1 0-2, s2 2-7, s3 7-9 -->
+<rect x="400" y="530" width="212" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="612" y="530" width="530" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="1142" y="530" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+
+<!-- finish line t=10 -->
+<line x1="1460" y1="335" x2="1460" y2="612" stroke="#55554F" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="1478" y="368" font-size="24" fill="#55554F" font-family="'SF Mono', Menlo, monospace">all done &#183; t=10</text>
+
+<!-- ============ panel 2 : barrier ============ -->
+<text x="180" y="738" font-size="28" font-weight="600" fill="#4A4A44" font-family="'SF Mono', Menlo, monospace">parallel() between stages &#8212; barriers</text>
+
+<text x="360" y="826" text-anchor="end" font-size="28" fill="#4A4A44">Item A</text>
+<text x="360" y="916" text-anchor="end" font-size="28" fill="#4A4A44">Item B</text>
+<text x="360" y="1006" text-anchor="end" font-size="28" fill="#4A4A44">Item C</text>
+
+<!-- A: s1 0-3, idle 3-6, s2 6-8, idle 8-11, s3 11-13 -->
+<rect x="400" y="790" width="318" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="722" y="790" width="310" height="58" rx="10" fill="none" stroke="#B5B5AC" stroke-width="2.5" stroke-dasharray="8 7"/>
+<rect x="1036" y="790" width="212" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="1252" y="790" width="310" height="58" rx="10" fill="none" stroke="#B5B5AC" stroke-width="2.5" stroke-dasharray="8 7"/>
+<rect x="1566" y="790" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+<!-- B: s1 0-6, s2 6-8, idle 8-11, s3 11-13 -->
+<rect x="400" y="880" width="636" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="1036" y="880" width="212" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="1252" y="880" width="310" height="58" rx="10" fill="none" stroke="#B5B5AC" stroke-width="2.5" stroke-dasharray="8 7"/>
+<rect x="1566" y="880" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+<!-- C: s1 0-2, idle 2-6, s2 6-11, s3 11-13 -->
+<rect x="400" y="970" width="212" height="58" rx="10" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<rect x="616" y="970" width="416" height="58" rx="10" fill="none" stroke="#B5B5AC" stroke-width="2.5" stroke-dasharray="8 7"/>
+<rect x="1036" y="970" width="530" height="58" rx="10" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<rect x="1566" y="970" width="212" height="58" rx="10" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+
+<!-- barrier lines t=6, t=11 -->
+<line x1="1036" y1="762" x2="1036" y2="1052" stroke="#55554F" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="1036" y="752" text-anchor="middle" font-size="22" fill="#55554F" font-family="'SF Mono', Menlo, monospace">barrier</text>
+<line x1="1566" y1="762" x2="1566" y2="1052" stroke="#55554F" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="1566" y="752" text-anchor="middle" font-size="22" fill="#55554F" font-family="'SF Mono', Menlo, monospace">barrier</text>
+
+<!-- finish line t=13 -->
+<line x1="1778" y1="762" x2="1778" y2="1052" stroke="#55554F" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="1778" y="752" text-anchor="middle" font-size="22" fill="#55554F" font-family="'SF Mono', Menlo, monospace">t=13</text>
+
+<!-- takeaway -->
+<text x="1000" y="1130" text-anchor="middle" font-size="29" fill="#44443F">Same work, same agents &#8212; the two barriers alone add 3 units of wall-clock.</text>
+
+<!-- legend -->
+<g font-size="24" fill="#55554F" font-family="'SF Mono', Menlo, monospace">
+<rect x="400" y="1185" width="44" height="30" rx="8" fill="#DAE8D8" stroke="#6FA37C" stroke-width="2.5"/>
+<text x="458" y="1208">stage 1</text>
+<rect x="660" y="1185" width="44" height="30" rx="8" fill="#F0E6D2" stroke="#C9A96A" stroke-width="2.5"/>
+<text x="718" y="1208">stage 2</text>
+<rect x="920" y="1185" width="44" height="30" rx="8" fill="#F7DCCE" stroke="#C25E3F" stroke-width="2.5"/>
+<text x="978" y="1208">stage 3</text>
+<rect x="1180" y="1185" width="44" height="30" rx="8" fill="none" stroke="#B5B5AC" stroke-width="2.5" stroke-dasharray="8 7"/>
+<text x="1238" y="1208">idle, waiting on the barrier</text>
+</g>
+</svg>

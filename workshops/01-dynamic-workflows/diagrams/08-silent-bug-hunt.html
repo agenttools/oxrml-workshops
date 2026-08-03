@@ -1,0 +1,79 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1630" viewBox="0 0 2000 1630" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1630" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Silent-bug hunt workflow</text>
+<rect x="80" y="185" width="1840" height="1375" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="380" y="250" width="250" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="318" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="366" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Training repo</text>
+
+<!-- FIND container -->
+<rect x="300" y="470" width="1460" height="290" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="728" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; FIND</text>
+
+<!-- fan In -> finders -->
+<path d="M505 395 C505 470 496 525 492 558" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C640 460 790 512 843 556" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C760 435 1130 485 1200 553" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C860 425 1440 472 1558 550" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- finders -->
+<g>
+<rect x="340" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="490" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Finder 1</text>
+<text x="490" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">data leakage</text>
+<rect x="700" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="850" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Finder 2</text>
+<text x="850" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">eval contamination</text>
+<rect x="1060" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1210" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Finder 3</text>
+<text x="1210" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">masking &amp; loss</text>
+<rect x="1420" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1570" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Finder 4</text>
+<text x="1570" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">nondeterminism</text>
+</g>
+
+<!-- converge finders -> dedup -->
+<path d="M490 670 C540 770 800 800 918 821" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M850 670 C870 730 950 778 972 820" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1210 670 C1180 760 1090 792 1052 820" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1570 670 C1500 780 1220 802 1102 822" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- dedup (plain code, oat) -->
+<rect x="850" y="830" width="320" height="125" rx="12" fill="#F0E6D2" stroke="#C9A96A" stroke-width="3"/>
+<text x="1010" y="885" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Dedup &amp; gate</text>
+<text x="1010" y="921" text-anchor="middle" font-size="21" fill="#97783A" font-family="'SF Mono', Menlo, monospace">plain JS &#8212; no agent</text>
+
+<!-- loop back to finders -->
+<path d="M850 892 L272 892 Q250 892 250 872 L250 637 Q250 617 270 617 L328 617"
+      fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="548" y="872" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">new bugs &#8594; next wave</text>
+
+<!-- PROVE container -->
+<rect x="300" y="1015" width="1460" height="300" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1283" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; PROVE</text>
+
+<!-- dedup -> reproducer -->
+<path d="M1010 955 L1010 1085" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- reproducer -->
+<rect x="785" y="1095" width="450" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1010" y="1147" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reproducer</text>
+<text x="1010" y="1183" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">a failing 10-line test, per bug</text>
+
+<!-- to Out -->
+<path d="M1010 1215 L1010 1360" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="850" y="1370" width="320" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1010" y="1438" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1010" y="1486" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Bugs that reproduce</text>
+</svg>

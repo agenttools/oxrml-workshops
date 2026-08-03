@@ -1,0 +1,75 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1630" viewBox="0 0 2000 1630" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1630" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Results-explainer workflow</text>
+<rect x="80" y="185" width="1840" height="1375" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="355" y="250" width="300" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="318" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="366" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Logs + checkpoints</text>
+
+<!-- ANALYZE container -->
+<rect x="300" y="470" width="1400" height="290" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="728" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; ANALYZE</text>
+
+<!-- fan In -> analysts -->
+<path d="M505 395 C505 470 516 525 528 558" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C640 470 830 515 898 556" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C760 440 1180 485 1278 552" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- analysts -->
+<g>
+<rect x="380" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="530" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Analyst 1</text>
+<text x="530" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">training curves</text>
+<rect x="760" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="910" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Analyst 2</text>
+<text x="910" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">ablation table</text>
+<rect x="1140" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1290" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Analyst 3</text>
+<text x="1290" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">failure cases</text>
+</g>
+
+<!-- converge analysts -> assemble -->
+<path d="M530 670 C580 770 830 800 922 818" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M910 670 C930 730 990 775 1005 818" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1290 670 C1250 770 1130 802 1098 818" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- assemble (plain code, oat) -->
+<rect x="820" y="830" width="380" height="125" rx="12" fill="#F0E6D2" stroke="#C9A96A" stroke-width="3"/>
+<text x="1010" y="885" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Assemble facts</text>
+<text x="1010" y="921" text-anchor="middle" font-size="21" fill="#97783A" font-family="'SF Mono', Menlo, monospace">plain JS &#8212; one JSON bundle</text>
+
+<!-- BUILD container -->
+<rect x="300" y="1015" width="1400" height="300" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1283" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; BUILD</text>
+
+<!-- assemble -> builder -->
+<path d="M1010 955 C900 1000 700 1040 640 1085" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- builder & critic -->
+<g>
+<rect x="400" y="1090" width="440" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="620" y="1142" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Artifact builder</text>
+<text x="620" y="1178" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">writes one-file HTML</text>
+<rect x="1000" y="1090" width="440" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1220" y="1142" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Design critic</text>
+<text x="1220" y="1178" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">screenshots &amp; polishes</text>
+</g>
+<path d="M840 1150 L992 1150" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- to Out -->
+<path d="M1220 1210 L1220 1360" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="1060" y="1370" width="320" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1220" y="1438" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1220" y="1486" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">One-file HTML page</text>
+</svg>

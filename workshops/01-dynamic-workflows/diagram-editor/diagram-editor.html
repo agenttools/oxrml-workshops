@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflow Diagram Editor</title>
+<style>
+  :root {
+    --ivory:#FAF9F5; --paper:#FFFFFF; --slate:#141413; --clay:#D97757; --clay-d:#B85C3E;
+    --gray-100:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F; --gray-700:#3D3D3A;
+    --mono: ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans: system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); background:var(--ivory); color:var(--slate); height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+
+  header { display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1.5px solid var(--gray-300); background:var(--ivory); flex-wrap:wrap; }
+  header .brand { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); margin-right:6px; }
+  button {
+    font-family:var(--mono); font-size:12px; padding:7px 12px; border-radius:8px; cursor:pointer;
+    border:1.5px solid var(--gray-300); background:var(--paper); color:var(--gray-700); transition:background .12s ease, border-color .12s ease;
+  }
+  button:hover { background:var(--gray-100); }
+  button.primary { background:var(--clay); border-color:var(--clay); color:#fff; }
+  button.primary:hover { background:var(--clay-d); }
+  button.on { background:#3D3D3A; border-color:#3D3D3A; color:#fff; }
+  .sep { width:1.5px; align-self:stretch; background:var(--gray-300); margin:0 4px; }
+  header input[type="text"] { font-family:var(--sans); font-size:14px; font-weight:600; padding:7px 10px; border:1.5px solid var(--gray-300); border-radius:8px; background:var(--paper); min-width:280px; }
+  header label.hfield { font-family:var(--mono); font-size:11px; color:var(--gray-500); display:flex; align-items:center; gap:6px; }
+  header input[type="number"] { width:80px; font-family:var(--mono); font-size:12px; padding:6px 8px; border:1.5px solid var(--gray-300); border-radius:8px; }
+
+  main { flex:1; display:flex; min-height:0; }
+  #canvasWrap { flex:1; overflow:auto; padding:20px; background:#E3E2DA; }
+  #canvasWrap svg { display:block; margin:0 auto; max-width:100%; height:auto; background:#E9E8E1; border-radius:10px; box-shadow:0 4px 10px rgba(20,20,19,.08); }
+  svg text { user-select:none; -webkit-user-select:none; }
+  .node-hit { cursor:grab; }
+  .connecting .node-hit { cursor:crosshair; }
+  .arrow-hit { cursor:pointer; }
+
+  aside { width:280px; border-left:1.5px solid var(--gray-300); background:var(--ivory); padding:16px; overflow-y:auto; }
+  aside h2 { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-500); font-weight:500; margin:0 0 12px; }
+  aside .field { margin-bottom:12px; }
+  aside label { display:block; font-family:var(--mono); font-size:11px; color:var(--gray-500); margin-bottom:4px; }
+  aside input, aside select { width:100%; font-family:var(--sans); font-size:13px; padding:7px 9px; border:1.5px solid var(--gray-300); border-radius:8px; background:var(--paper); }
+  aside .row { display:flex; gap:8px; }
+  aside .row .field { flex:1; }
+  aside .danger { width:100%; border-color:#B04A3F; color:#B04A3F; margin-top:8px; }
+  aside .danger:hover { background:rgba(176,74,63,.08); }
+  aside .empty { font-size:13px; color:var(--gray-500); line-height:1.55; }
+  aside .hint { font-family:var(--mono); font-size:11px; color:var(--gray-500); line-height:1.7; border-top:1.5px solid var(--gray-300); margin-top:16px; padding-top:12px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">workflow diagrams</span>
+  <input type="text" id="titleInput" placeholder="Diagram title">
+  <label class="hfield">H <input type="number" id="heightInput" step="10" min="600" max="4000"></label>
+  <span class="sep"></span>
+  <button data-add="agent">+ Agent</button>
+  <button data-add="code">+ Code</button>
+  <button data-add="terminal">+ In/Out</button>
+  <button data-add="container">+ Phase</button>
+  <button data-add="note">+ Note</button>
+  <span class="sep"></span>
+  <button id="connectBtn">Connect ⇢</button>
+  <span class="sep"></span>
+  <button id="exportSvg">SVG</button>
+  <button id="exportPng" class="primary">PNG</button>
+  <button id="saveJson">Save</button>
+  <button id="loadJson">Load</button>
+  <button id="resetBtn">Reset seed</button>
+</header>
+<main>
+  <div id="canvasWrap"></div>
+  <aside id="panel"></aside>
+</main>
+<input type="file" id="fileInput" accept=".json" style="display:none">
+
+<script>
+'use strict';
+/* ---------- state ---------- */
+const STORE_KEY = 'wfd-editor-v1';
+const seed = () => ({
+  title: 'Citation-auditor workflow',
+  height: 1810,
+  nodes: [
+    {id:'p1', type:'container', x:300, y:470, w:1400, h:290, main:'PHASE · CHECK', sub:''},
+    {id:'p2', type:'container', x:300, y:1015, w:1400, h:460, main:'PHASE · DEFEND', sub:''},
+    {id:'in',  type:'terminal', x:380, y:250, w:250, h:145, main:'In', sub:'Paper draft'},
+    {id:'c1', type:'agent', x:380, y:565, w:300, h:105, main:'Checker 1', sub:'intro claims'},
+    {id:'c2', type:'agent', x:760, y:565, w:300, h:105, main:'Checker 2', sub:'method claims'},
+    {id:'c3', type:'agent', x:1140, y:565, w:300, h:105, main:'Checker 3', sub:'results claims'},
+    {id:'g1', type:'code', x:810, y:830, w:400, h:125, main:'Collect flags', sub:'plain JS — failed cites only'},
+    {id:'d1', type:'agent', x:380, y:1110, w:300, h:105, main:'Defender 1', sub:'re-reads the source'},
+    {id:'d2', type:'agent', x:760, y:1110, w:300, h:105, main:'Defender 2', sub:'checks the context'},
+    {id:'d3', type:'agent', x:1140, y:1110, w:300, h:105, main:'Defender 3', sub:'steelmans the cite'},
+    {id:'v1', type:'agent', x:850, y:1305, w:320, h:115, main:'Majority vote', sub:'bad cite if ≥ 2 agree'},
+    {id:'out', type:'terminal', x:885, y:1555, w:250, h:145, main:'Out', sub:'Miscitation report'},
+  ],
+  arrows: [
+    {id:'a1', from:'in', to:'c1', label:''}, {id:'a2', from:'in', to:'c2', label:''}, {id:'a3', from:'in', to:'c3', label:''},
+    {id:'a4', from:'c1', to:'g1', label:''}, {id:'a5', from:'c2', to:'g1', label:''}, {id:'a6', from:'c3', to:'g1', label:''},
+    {id:'a7', from:'g1', to:'d1', label:''}, {id:'a8', from:'g1', to:'d2', label:''}, {id:'a9', from:'g1', to:'d3', label:''},
+    {id:'a10', from:'d1', to:'v1', label:''}, {id:'a11', from:'d2', to:'v1', label:''}, {id:'a12', from:'d3', to:'v1', label:''},
+    {id:'a13', from:'v1', to:'out', label:''},
+  ],
+});
+
+let state;
+try { state = JSON.parse(localStorage.getItem(STORE_KEY)) || seed(); } catch { state = seed(); }
+let selected = null;          // {kind:'node'|'arrow', id}
+let connectMode = false;
+let pendingFrom = null;
+let drag = null;              // {id, dx, dy, resize:boolean}
+let idCounter = Date.now() % 100000;
+const uid = p => p + (++idCounter);
+const byId = id => state.nodes.find(n => n.id === id);
+
+/* ---------- svg building ---------- */
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const MONO = "'SF Mono', Menlo, monospace";
+
+function nodeSvg(n, forExport) {
+  const cx = n.x + n.w/2;
+  const hit = forExport ? '' : ` class="node-hit" data-node="${n.id}"`;
+  const sel = !forExport && selected && selected.kind==='node' && selected.id===n.id;
+  let s = '';
+  if (n.type === 'container') {
+    s += `<rect${hit} x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>`;
+    if (n.main) s += `<text x="${n.x+36}" y="${n.y+n.h-32}" font-size="21" letter-spacing="2" fill="#5E9070" font-family="${MONO}" pointer-events="none">${esc(n.main)}</text>`;
+  } else if (n.type === 'note') {
+    s += `<text${hit} x="${cx}" y="${n.y+24}" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="${MONO}">${esc(n.main)}</text>`;
+    if (!forExport) s += `<rect class="node-hit" data-node="${n.id}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" fill="transparent"/>`;
+  } else {
+    const styles = {
+      terminal: {rx:16, fill:'#F7DCCE', stroke:'#C25E3F', mainSize:40, mainW:600, mainFill:'#262624', subSize:27, subFill:'#C25E3F', subMono:false},
+      agent:    {rx:12, fill:'#F1F1EB', stroke:'#85857D', mainSize:31, mainW:500, mainFill:'#33332F', subSize:21, subFill:'#8A8A80', subMono:true},
+      code:     {rx:12, fill:'#F0E6D2', stroke:'#C9A96A', mainSize:31, mainW:500, mainFill:'#33332F', subSize:21, subFill:'#97783A', subMono:true},
+    }[n.type];
+    s += `<rect${hit} x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="${styles.rx}" fill="${styles.fill}" stroke="${styles.stroke}" stroke-width="3"/>`;
+    const hasSub = !!n.sub;
+    const mainY = hasSub ? n.y + n.h*0.45 : n.y + n.h/2 + styles.mainSize*0.35;
+    s += `<text x="${cx}" y="${mainY}" text-anchor="middle" font-size="${styles.mainSize}" font-weight="${styles.mainW}" fill="${styles.mainFill}" pointer-events="none">${esc(n.main)}</text>`;
+    if (hasSub) {
+      const fam = styles.subMono ? ` font-family="${MONO}"` : ' font-weight="500"';
+      s += `<text x="${cx}" y="${n.y + n.h*0.45 + styles.subSize + 15}" text-anchor="middle" font-size="${styles.subSize}" fill="${styles.subFill}"${fam} pointer-events="none">${esc(n.sub)}</text>`;
+    }
+  }
+  if (sel) {
+    s += `<rect x="${n.x-8}" y="${n.y-8}" width="${n.w+16}" height="${n.h+16}" rx="18" fill="none" stroke="#D97757" stroke-width="2" stroke-dasharray="6 5" pointer-events="none"/>`;
+    s += `<rect data-resize="${n.id}" x="${n.x+n.w-9}" y="${n.y+n.h-9}" width="20" height="20" rx="4" fill="#D97757" style="cursor:nwse-resize"/>`;
+  }
+  return s;
+}
+
+function arrowGeom(a) {
+  const s = byId(a.from), t = byId(a.to);
+  if (!s || !t) return null;
+  const scx = s.x + s.w/2, tcx = t.x + t.w/2;
+  // spread endpoints when several arrows share a target edge
+  const siblings = state.arrows.filter(o => o.to === a.to && byId(o.from))
+    .sort((p,q) => (byId(p.from).x + byId(p.from).w/2) - (byId(q.from).x + byId(q.from).w/2));
+  const i = siblings.indexOf(a), nSib = siblings.length;
+  let off = (i - (nSib-1)/2) * 75;
+  off = Math.max(-(t.w/2-45), Math.min(t.w/2-45, off));
+  if (t.y >= s.y + s.h - 10) {          // downward
+    const x1 = scx, y1 = s.y + s.h, x2 = tcx + off, y2 = t.y - 6;
+    return {d:`M ${x1} ${y1} C ${x1} ${y1+75} ${x2} ${y2-85} ${x2} ${y2}`, mx:(x1+x2)/2, my:(y1+y2)/2};
+  }
+  if (s.y >= t.y + t.h - 10) {          // upward
+    const x1 = scx, y1 = s.y, x2 = tcx + off, y2 = t.y + t.h + 6;
+    return {d:`M ${x1} ${y1} C ${x1} ${y1-75} ${x2} ${y2+85} ${x2} ${y2}`, mx:(x1+x2)/2, my:(y1+y2)/2};
+  }
+  // horizontal
+  const leftToRight = scx <= tcx;
+  const x1 = leftToRight ? s.x + s.w : s.x, x2 = leftToRight ? t.x - 6 : t.x + t.w + 6;
+  const y1 = s.y + s.h/2, y2 = t.y + t.h/2;
+  return {d:`M ${x1} ${y1} C ${x1 + (leftToRight?70:-70)} ${y1} ${x2 + (leftToRight?-80:80)} ${y2} ${x2} ${y2}`, mx:(x1+x2)/2, my:(y1+y2)/2};
+}
+
+function arrowSvg(a, forExport) {
+  const g = arrowGeom(a);
+  if (!g) return '';
+  const sel = !forExport && selected && selected.kind==='arrow' && selected.id===a.id;
+  let s = `<path d="${g.d}" fill="none" stroke="${sel ? '#D97757' : '#8A8A82'}" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>`;
+  if (!forExport) s += `<path class="arrow-hit" data-arrow="${a.id}" d="${g.d}" fill="none" stroke="transparent" stroke-width="20"/>`;
+  if (a.label) s += `<text x="${g.mx}" y="${g.my-14}" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="${MONO}" pointer-events="none">${esc(a.label)}</text>`;
+  return s;
+}
+
+function buildSvg(forExport) {
+  const H = state.height;
+  const containers = state.nodes.filter(n => n.type==='container');
+  const boxes = state.nodes.filter(n => n.type!=='container' && n.type!=='note');
+  const notes = state.nodes.filter(n => n.type==='note');
+  let inner = '';
+  inner += `<defs><marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+  inner += `<rect width="2000" height="${H}" fill="#E9E8E1"/>`;
+  inner += `<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">${esc(state.title)}</text>`;
+  inner += `<rect x="80" y="185" width="1840" height="${H-250}" rx="30" fill="#FAFAF6"/>`;
+  containers.forEach(n => inner += nodeSvg(n, forExport));
+  state.arrows.forEach(a => inner += arrowSvg(a, forExport));
+  boxes.forEach(n => inner += nodeSvg(n, forExport));
+  notes.forEach(n => inner += nodeSvg(n, forExport));
+  if (!forExport && connectMode && pendingFrom) {
+    const p = byId(pendingFrom);
+    if (p) inner += `<rect x="${p.x-8}" y="${p.y-8}" width="${p.w+16}" height="${p.h+16}" rx="18" fill="none" stroke="#788C5D" stroke-width="3" pointer-events="none"/>`;
+  }
+  return `<svg id="board" width="2000" height="${H}" viewBox="0 0 2000 ${H}" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">${inner}</svg>`;
+}
+
+/* ---------- render + persist ---------- */
+const wrap = document.getElementById('canvasWrap');
+function render() {
+  wrap.innerHTML = buildSvg(false);
+  wrap.classList.toggle('connecting', connectMode);
+  document.getElementById('titleInput').value = state.title;
+  document.getElementById('heightInput').value = state.height;
+  document.getElementById('connectBtn').classList.toggle('on', connectMode);
+  renderPanel();
+  localStorage.setItem(STORE_KEY, JSON.stringify(state));
+}
+
+function renderPanel() {
+  const panel = document.getElementById('panel');
+  if (!selected) {
+    panel.innerHTML = `<h2>Inspector</h2><p class="empty">Click a box or arrow to edit it. Drag boxes to move; drag the orange corner to resize.</p>
+    <div class="hint">connect: click Connect, then source box, then target box<br><br>delete / backspace removes the selection<br><br>double-click a box to jump to its text<br><br>PNG export downloads at full 2000px width</div>`;
+    return;
+  }
+  if (selected.kind === 'node') {
+    const n = byId(selected.id);
+    if (!n) { selected = null; return renderPanel(); }
+    panel.innerHTML = `<h2>${n.type}</h2>
+      <div class="field"><label>${n.type==='container' ? 'phase label' : n.type==='note' ? 'text' : 'main label'}</label><input id="f-main" value="${esc(n.main)}"></div>
+      ${(n.type!=='container' && n.type!=='note') ? `<div class="field"><label>sub label</label><input id="f-sub" value="${esc(n.sub)}"></div>` : ''}
+      ${(n.type==='terminal'||n.type==='agent'||n.type==='code') ? `<div class="field"><label>type</label><select id="f-type">
+        <option value="agent"${n.type==='agent'?' selected':''}>agent (gray)</option>
+        <option value="code"${n.type==='code'?' selected':''}>plain code (oat)</option>
+        <option value="terminal"${n.type==='terminal'?' selected':''}>in/out (salmon)</option>
+      </select></div>` : ''}
+      <div class="row">
+        <div class="field"><label>x</label><input id="f-x" type="number" step="10" value="${Math.round(n.x)}"></div>
+        <div class="field"><label>y</label><input id="f-y" type="number" step="10" value="${Math.round(n.y)}"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>w</label><input id="f-w" type="number" step="10" value="${Math.round(n.w)}"></div>
+        <div class="field"><label>h</label><input id="f-h" type="number" step="5" value="${Math.round(n.h)}"></div>
+      </div>
+      <button class="danger" id="f-del">Delete</button>`;
+    const bind = (fid, key, isNum) => {
+      const el = document.getElementById(fid);
+      if (el) el.addEventListener('input', () => { n[key] = isNum ? (+el.value || 0) : el.value; render(); refocus(fid, el); });
+    };
+    bind('f-main','main'); bind('f-sub','sub');
+    bind('f-x','x',true); bind('f-y','y',true); bind('f-w','w',true); bind('f-h','h',true);
+    const tSel = document.getElementById('f-type');
+    if (tSel) tSel.addEventListener('change', () => { n.type = tSel.value; render(); });
+    document.getElementById('f-del').addEventListener('click', deleteSelection);
+  } else {
+    const a = state.arrows.find(x => x.id === selected.id);
+    if (!a) { selected = null; return renderPanel(); }
+    panel.innerHTML = `<h2>arrow</h2>
+      <div class="field"><label>edge label (mono)</label><input id="f-label" value="${esc(a.label)}"></div>
+      <div class="field"><label>from → to</label><input value="${esc(byId(a.from)?.main || a.from)} → ${esc(byId(a.to)?.main || a.to)}" disabled></div>
+      <button class="danger" id="f-del">Delete</button>`;
+    const el = document.getElementById('f-label');
+    el.addEventListener('input', () => { a.label = el.value; render(); refocus('f-label', el); });
+    document.getElementById('f-del').addEventListener('click', deleteSelection);
+  }
+}
+// keep typing focus across re-renders
+function refocus(fid, oldEl) {
+  const pos = oldEl.selectionStart;
+  const el = document.getElementById(fid);
+  if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch {} }
+}
+
+function deleteSelection() {
+  if (!selected) return;
+  if (selected.kind === 'node') {
+    state.nodes = state.nodes.filter(n => n.id !== selected.id);
+    state.arrows = state.arrows.filter(a => a.from !== selected.id && a.to !== selected.id);
+  } else {
+    state.arrows = state.arrows.filter(a => a.id !== selected.id);
+  }
+  selected = null;
+  render();
+}
+
+/* ---------- pointer interaction ---------- */
+function svgPoint(evt) {
+  const svg = document.getElementById('board');
+  const pt = svg.createSVGPoint();
+  pt.x = evt.clientX; pt.y = evt.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+wrap.addEventListener('mousedown', evt => {
+  const rEl = evt.target.closest('[data-resize]');
+  const nEl = evt.target.closest('[data-node]');
+  const aEl = evt.target.closest('[data-arrow]');
+  if (rEl) {
+    drag = {id:rEl.dataset.resize, resize:true};
+    evt.preventDefault(); return;
+  }
+  if (nEl) {
+    const n = byId(nEl.dataset.node);
+    if (connectMode) {
+      if (!pendingFrom) { pendingFrom = n.id; }
+      else if (pendingFrom !== n.id) {
+        state.arrows.push({id:uid('a'), from:pendingFrom, to:n.id, label:''});
+        pendingFrom = null;
+      }
+      render(); return;
+    }
+    selected = {kind:'node', id:n.id};
+    const p = svgPoint(evt);
+    drag = {id:n.id, dx:p.x - n.x, dy:p.y - n.y, resize:false};
+    render();
+    evt.preventDefault(); return;
+  }
+  if (aEl) { selected = {kind:'arrow', id:aEl.dataset.arrow}; render(); return; }
+  // empty canvas
+  if (connectMode) pendingFrom = null;
+  selected = null;
+  render();
+});
+
+window.addEventListener('mousemove', evt => {
+  if (!drag) return;
+  const n = byId(drag.id);
+  if (!n) { drag = null; return; }
+  const p = svgPoint(evt);
+  if (drag.resize) {
+    n.w = Math.max(80, Math.round((p.x - n.x)/10)*10);
+    n.h = Math.max(40, Math.round((p.y - n.y)/5)*5);
+  } else {
+    n.x = Math.round((p.x - drag.dx)/10)*10;
+    n.y = Math.round((p.y - drag.dy)/10)*10;
+  }
+  render();
+});
+window.addEventListener('mouseup', () => { drag = null; });
+
+wrap.addEventListener('dblclick', evt => {
+  const nEl = evt.target.closest('[data-node]');
+  if (nEl) { selected = {kind:'node', id:nEl.dataset.node}; render(); document.getElementById('f-main')?.focus(); }
+});
+
+window.addEventListener('keydown', evt => {
+  if (evt.target.tagName === 'INPUT' || evt.target.tagName === 'SELECT') return;
+  if ((evt.key === 'Delete' || evt.key === 'Backspace') && selected) { evt.preventDefault(); deleteSelection(); }
+  if (evt.key === 'Escape') { pendingFrom = null; connectMode = false; selected = null; render(); }
+});
+
+/* ---------- toolbar ---------- */
+document.getElementById('titleInput').addEventListener('input', e => { state.title = e.target.value; render(); refocus('titleInput', e.target); });
+document.getElementById('heightInput').addEventListener('change', e => { state.height = Math.max(600, +e.target.value || 1400); render(); });
+document.getElementById('connectBtn').addEventListener('click', () => { connectMode = !connectMode; pendingFrom = null; render(); });
+
+document.querySelectorAll('[data-add]').forEach(btn => btn.addEventListener('click', () => {
+  const t = btn.dataset.add;
+  const defaults = {
+    agent:     {w:300, h:105, main:'New agent', sub:'its lens'},
+    code:      {w:320, h:125, main:'New gate', sub:'plain JS'},
+    terminal:  {w:250, h:145, main:'In', sub:'payload'},
+    container: {w:1400, h:290, main:'PHASE · NAME', sub:''},
+    note:      {w:340, h:34, main:'label → note', sub:''},
+  }[t];
+  const n = {id:uid('n'), type:t, x:1000 - defaults.w/2, y:Math.min(state.height-260, 300 + (state.nodes.length%6)*60), ...defaults};
+  state.nodes.push(n);
+  selected = {kind:'node', id:n.id};
+  render();
+}));
+
+/* ---------- export / io ---------- */
+function download(name, blob) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+const slug = () => (state.title || 'diagram').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'diagram';
+
+document.getElementById('exportSvg').addEventListener('click', () => {
+  download(slug()+'.svg', new Blob([buildSvg(true)], {type:'image/svg+xml'}));
+});
+document.getElementById('exportPng').addEventListener('click', () => {
+  const svgBlob = new Blob([buildSvg(true)], {type:'image/svg+xml'});
+  const url = URL.createObjectURL(svgBlob);
+  const img = new Image();
+  img.onload = () => {
+    const cv = document.createElement('canvas');
+    cv.width = 2000; cv.height = state.height;
+    cv.getContext('2d').drawImage(img, 0, 0, 2000, state.height);
+    cv.toBlob(b => { download(slug()+'.png', b); URL.revokeObjectURL(url); }, 'image/png');
+  };
+  img.src = url;
+});
+document.getElementById('saveJson').addEventListener('click', () => {
+  download(slug()+'.json', new Blob([JSON.stringify(state, null, 2)], {type:'application/json'}));
+});
+document.getElementById('loadJson').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', evt => {
+  const f = evt.target.files[0];
+  if (!f) return;
+  f.text().then(txt => {
+    try { const s = JSON.parse(txt); if (s.nodes && s.arrows) { state = s; selected = null; render(); } else alert('Not a diagram file'); }
+    catch { alert('Could not parse that file'); }
+  });
+  evt.target.value = '';
+});
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Replace the current diagram with the seed workflow?')) { state = seed(); selected = null; render(); }
+});
+
+render();
+</script>
+</body>
+</html>

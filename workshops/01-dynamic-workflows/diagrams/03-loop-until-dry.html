@@ -1,0 +1,63 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1340" viewBox="0 0 2000 1340" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1340" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Loop-until-dry workflow</text>
+<rect x="80" y="185" width="1840" height="1085" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="350" y="285" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="475" y="356" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="475" y="404" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Codebase</text>
+
+<!-- container -->
+<rect x="300" y="545" width="1420" height="440" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+
+<!-- fan from In -->
+<path d="M475 435 L475 540" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10"/>
+<path d="M475 540 C475 592 500 625 548 630" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M475 540 C475 688 505 755 548 760" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M475 540 C475 785 502 883 548 890" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- finders -->
+<g>
+<rect x="560" y="575" width="340" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="730" y="623" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Finder 1</text>
+<text x="730" y="659" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">correctness</text>
+<rect x="560" y="705" width="340" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="730" y="753" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Finder 2</text>
+<text x="730" y="789" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">security</text>
+<rect x="560" y="835" width="340" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="730" y="883" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Finder 3</text>
+<text x="730" y="919" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">performance</text>
+</g>
+
+<!-- converge to dedup -->
+<path d="M900 630 C990 630 1030 720 1068 747" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M900 760 L1068 760" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M900 890 C990 890 1030 800 1068 773" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- dedup -->
+<rect x="1080" y="695" width="360" height="130" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1260" y="752" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Dedup</text>
+<text x="1260" y="790" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">drop already-seen</text>
+
+<!-- loop back -->
+<path d="M1260 695 L1260 500 Q1260 480 1240 480 L760 480 Q740 480 740 500 L740 566"
+      fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="1000" y="458" text-anchor="middle" font-size="23" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">new findings &#8594; run another wave</text>
+
+<!-- exit to Out -->
+<path d="M1440 760 L1600 760 L1600 1048" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="1628" y="1022" font-size="23" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">2 dry waves &#8594; stop</text>
+
+<!-- Out -->
+<rect x="1475" y="1060" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1600" y="1131" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1600" y="1179" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Everything found</text>
+</svg>

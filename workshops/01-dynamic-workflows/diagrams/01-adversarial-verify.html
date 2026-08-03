@@ -1,0 +1,57 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1330" viewBox="0 0 2000 1330" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1330" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Adversarial-verify workflow</text>
+<rect x="80" y="185" width="1840" height="1075" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="380" y="265" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="336" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="384" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">One finding</text>
+
+<!-- container -->
+<rect x="320" y="505" width="1380" height="440" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+
+<!-- fan from In -->
+<path d="M505 415 L505 500" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10"/>
+<path d="M505 500 C505 555 548 593 606 593" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 500 C505 655 545 720 606 720" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 500 C505 755 540 847 606 847" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- skeptics -->
+<g>
+<rect x="620" y="545" width="320" height="96" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="780" y="586" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Skeptic 1</text>
+<text x="780" y="620" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">tries to refute</text>
+<rect x="620" y="672" width="320" height="96" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="780" y="713" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Skeptic 2</text>
+<text x="780" y="747" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">tries to refute</text>
+<rect x="620" y="799" width="320" height="96" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="780" y="840" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Skeptic 3</text>
+<text x="780" y="874" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">tries to refute</text>
+</g>
+
+<!-- converge -->
+<path d="M940 593 C1030 593 1075 680 1148 707" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M940 720 L1148 720" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M940 847 C1030 847 1075 760 1148 733" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- vote box -->
+<rect x="1160" y="655" width="380" height="130" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1350" y="712" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Majority vote</text>
+<text x="1350" y="750" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">kill if &#8805; 2 refute</text>
+
+<!-- to Out -->
+<path d="M1350 785 L1350 1000" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="1225" y="1010" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1350" y="1081" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1350" y="1129" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Keep or kill</text>
+</svg>

@@ -1,0 +1,83 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1950" viewBox="0 0 2000 1950" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1950" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Experiment-optimizer workflow</text>
+<rect x="80" y="185" width="1840" height="1695" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="355" y="250" width="300" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="318" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="366" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Repo + target metric</text>
+
+<!-- RUN container -->
+<rect x="300" y="470" width="1400" height="260" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="698" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; RUN</text>
+
+<!-- In -> trainer -->
+<path d="M505 395 C620 480 950 495 1004 538" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- trainer -->
+<rect x="810" y="545" width="400" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1010" y="591" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Trainer</text>
+<text x="1010" y="626" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">short proxy run, seeded</text>
+
+<!-- trainer -> gate -->
+<path d="M1010 650 L1010 780" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- gate (plain code, oat) -->
+<rect x="820" y="790" width="380" height="125" rx="12" fill="#F0E6D2" stroke="#C9A96A" stroke-width="3"/>
+<text x="1010" y="845" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Gate</text>
+<text x="1010" y="881" text-anchor="middle" font-size="21" fill="#97783A" font-family="'SF Mono', Menlo, monospace">plain JS &#8212; target? budget?</text>
+
+<!-- gate -> diagnostician -->
+<path d="M1010 915 C850 960 690 1020 625 1082" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="600" y="968" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">missed &#8594; diagnose</text>
+
+<!-- DIAGNOSE container -->
+<rect x="300" y="1000" width="1400" height="300" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1268" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; DIAGNOSE</text>
+
+<!-- diagnostician & patcher -->
+<g>
+<rect x="420" y="1090" width="380" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="610" y="1142" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Diagnostician</text>
+<text x="610" y="1178" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">reads curves &amp; logs</text>
+<rect x="900" y="1090" width="380" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1090" y="1142" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Patcher</text>
+<text x="1090" y="1178" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">one change per wave</text>
+</g>
+<path d="M800 1150 L892 1150" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- loop patcher -> trainer -->
+<path d="M1280 1150 L1740 1150 Q1760 1150 1760 1130 L1760 617 Q1760 597 1740 597 L1218 597"
+      fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="1480" y="577" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">one change &#8594; rerun</text>
+
+<!-- gate exit to reporter -->
+<path d="M820 852 L270 852 Q250 852 250 872 L250 1480 Q250 1500 270 1500 L802 1500"
+      fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="530" y="832" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">target met / budget out</text>
+
+<!-- REPORT container -->
+<rect x="300" y="1390" width="1400" height="230" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1588" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; REPORT</text>
+
+<!-- reporter -->
+<rect x="810" y="1440" width="400" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1010" y="1492" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reporter</text>
+<text x="1010" y="1528" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">builds the HTML artifact</text>
+
+<!-- to Out -->
+<path d="M1010 1560 L1010 1655" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="850" y="1665" width="320" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1010" y="1733" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1010" y="1781" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Report + best config</text>
+</svg>

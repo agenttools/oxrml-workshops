@@ -1,0 +1,89 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1810" viewBox="0 0 2000 1810" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1810" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Citation-auditor workflow</text>
+<rect x="80" y="185" width="1840" height="1560" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="380" y="250" width="250" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="318" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="366" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Paper draft</text>
+
+<!-- CHECK container -->
+<rect x="300" y="470" width="1400" height="290" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="728" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; CHECK</text>
+
+<!-- fan In -> checkers -->
+<path d="M505 395 C505 470 530 480 530 552" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C505 480 910 455 910 550" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C505 490 1290 440 1290 548" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- checkers -->
+<g>
+<rect x="380" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="530" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Checker 1</text>
+<text x="530" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">intro claims</text>
+<rect x="760" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="910" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Checker 2</text>
+<text x="910" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">method claims</text>
+<rect x="1140" y="565" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1290" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Checker 3</text>
+<text x="1290" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">results claims</text>
+</g>
+
+<!-- converge checkers -> collect -->
+<path d="M530 670 C530 760 935 735 935 820" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M910 670 C910 720 1010 730 1010 818" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1290 670 C1290 760 1085 735 1085 820" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- collect flags (plain code, oat) -->
+<rect x="850" y="830" width="320" height="125" rx="12" fill="#F0E6D2" stroke="#C9A96A" stroke-width="3"/>
+<text x="1010" y="885" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Collect flags</text>
+<text x="1010" y="921" text-anchor="middle" font-size="21" fill="#97783A" font-family="'SF Mono', Menlo, monospace">plain JS &#8212; failed cites only</text>
+
+<!-- DEFEND container -->
+<rect x="300" y="1015" width="1400" height="460" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1443" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; DEFEND</text>
+
+<!-- fan collect -> defenders -->
+<path d="M1010 955 C1010 1025 530 1010 530 1096" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1010 955 C1010 1005 910 1015 910 1096" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1010 955 C1010 1025 1290 1010 1290 1096" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- defenders -->
+<g>
+<rect x="380" y="1110" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="530" y="1156" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Defender 1</text>
+<text x="530" y="1191" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">re-reads the source</text>
+<rect x="760" y="1110" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="910" y="1156" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Defender 2</text>
+<text x="910" y="1191" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">checks the context</text>
+<rect x="1140" y="1110" width="300" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1290" y="1156" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Defender 3</text>
+<text x="1290" y="1191" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">steelmans the cite</text>
+</g>
+
+<!-- converge defenders -> vote -->
+<path d="M530 1215 C530 1290 935 1225 935 1296" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M910 1215 C910 1250 1010 1230 1010 1294" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1290 1215 C1290 1290 1085 1225 1085 1296" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- vote -->
+<rect x="850" y="1305" width="320" height="115" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1010" y="1355" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Majority vote</text>
+<text x="1010" y="1391" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">bad cite if &#8805; 2 agree</text>
+
+<!-- to Out -->
+<path d="M1010 1420 L1010 1545" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="885" y="1555" width="250" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1010" y="1623" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1010" y="1671" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Miscitation report</text>
+</svg>

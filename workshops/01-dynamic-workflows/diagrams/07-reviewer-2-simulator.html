@@ -1,0 +1,62 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1450" viewBox="0 0 2000 1450" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1450" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Reviewer-2 simulator</text>
+<rect x="80" y="185" width="1840" height="1195" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="255" y="265" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="380" y="336" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="380" y="384" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Your draft</text>
+
+<!-- container -->
+<rect x="300" y="505" width="1420" height="570" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+
+<!-- fan from In -->
+<path d="M380 415 L380 500" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10"/>
+<path d="M380 500 C380 557 424 595 486 595" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M380 500 C380 660 420 725 486 725" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M380 500 C380 775 418 855 486 855" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M380 500 C380 880 415 985 486 985" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- reviewers -->
+<g>
+<rect x="500" y="545" width="380" height="100" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="690" y="589" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reviewer A</text>
+<text x="690" y="623" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">methodology pedant</text>
+<rect x="500" y="675" width="380" height="100" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="690" y="719" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reviewer B</text>
+<text x="690" y="753" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">missing-baseline hawk</text>
+<rect x="500" y="805" width="380" height="100" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="690" y="849" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reviewer C</text>
+<text x="690" y="883" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">stats-rigor stickler</text>
+<rect x="500" y="935" width="380" height="100" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="690" y="979" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Reviewer D</text>
+<text x="690" y="1013" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">novelty skeptic</text>
+</g>
+
+<!-- converge -->
+<path d="M880 595 C1000 595 1050 700 1108 748" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M880 725 C980 725 1040 762 1108 776" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M880 855 C980 855 1040 818 1108 804" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M880 985 C1000 985 1050 880 1108 832" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- rank & dedup -->
+<rect x="1120" y="725" width="400" height="130" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1320" y="782" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Rank &amp; dedup</text>
+<text x="1320" y="818" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">by real-reviewer odds</text>
+
+<!-- to Out -->
+<path d="M1320 855 L1320 1110" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="1195" y="1120" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1320" y="1191" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1320" y="1239" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Pre-deadline fix list</text>
+</svg>

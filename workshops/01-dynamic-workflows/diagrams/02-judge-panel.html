@@ -1,0 +1,65 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1330" viewBox="0 0 2000 1330" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1330" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Judge-panel workflow</text>
+<rect x="80" y="185" width="1840" height="1075" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="255" y="265" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="380" y="336" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="380" y="384" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">One hard problem</text>
+
+<!-- container -->
+<rect x="300" y="505" width="1420" height="440" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+
+<!-- fan from In -->
+<path d="M380 415 L380 500" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10"/>
+<path d="M380 500 C380 552 424 590 486 590" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M380 500 C380 655 420 720 486 720" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M380 500 C380 755 415 850 486 850" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- authors -->
+<g>
+<rect x="500" y="535" width="320" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="660" y="583" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Author 1</text>
+<text x="660" y="619" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">MVP-first angle</text>
+<rect x="500" y="665" width="320" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="660" y="713" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Author 2</text>
+<text x="660" y="749" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">risk-first angle</text>
+<rect x="500" y="795" width="320" height="110" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="660" y="843" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Author 3</text>
+<text x="660" y="879" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">user-first angle</text>
+</g>
+
+<!-- converge to judge panel -->
+<path d="M820 590 C900 590 930 680 968 707" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M820 720 L968 720" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M820 850 C900 850 930 760 968 733" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- judge panel -->
+<rect x="980" y="655" width="330" height="130" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1145" y="712" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Judge panel</text>
+<text x="1145" y="750" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">scores every draft</text>
+
+<!-- to synthesizer -->
+<path d="M1310 720 L1392 720" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- synthesizer -->
+<rect x="1400" y="655" width="270" height="130" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1535" y="712" text-anchor="middle" font-size="32" font-weight="500" fill="#33332F">Synthesizer</text>
+<text x="1535" y="750" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">winner + grafts</text>
+
+<!-- to Out -->
+<path d="M1535 785 L1535 1000" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="1410" y="1010" width="250" height="150" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1535" y="1081" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1535" y="1129" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Best answer</text>
+</svg>

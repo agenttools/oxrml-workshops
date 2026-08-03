@@ -1,0 +1,70 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0}</style>
+<svg width="2000" height="1720" viewBox="0 0 2000 1720" xmlns="http://www.w3.org/2000/svg"
+     font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif">
+<defs>
+<marker id="arr" viewBox="0 0 12 12" refX="8" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M2 1.5 L10 6 L2 10.5" fill="none" stroke="#82827A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="2000" height="1720" fill="#E9E8E1"/>
+<text x="1000" y="118" text-anchor="middle" font-size="60" font-weight="700" fill="#1C1C1A">Double-marking workflow</text>
+<rect x="80" y="185" width="1840" height="1465" rx="30" fill="#FAFAF6"/>
+
+<!-- In -->
+<rect x="380" y="250" width="250" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="505" y="318" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">In</text>
+<text x="505" y="366" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Work + rubric</text>
+
+<!-- MARK container -->
+<rect x="300" y="470" width="1400" height="290" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="728" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; MARK</text>
+
+<!-- fan In -> markers -->
+<path d="M505 395 C505 470 610 475 610 552" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M505 395 C505 490 1090 455 1090 550" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- markers -->
+<g>
+<rect x="420" y="565" width="380" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="610" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Marker A</text>
+<text x="610" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">scores all criteria, blind</text>
+<rect x="900" y="565" width="380" height="105" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1090" y="611" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Marker B</text>
+<text x="1090" y="646" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">scores all criteria, blind</text>
+</g>
+
+<!-- converge markers -> compare -->
+<path d="M610 670 C610 750 955 735 955 820" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<path d="M1090 670 C1090 725 1065 745 1065 818" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- compare (plain code, oat) -->
+<rect x="795" y="830" width="430" height="125" rx="12" fill="#F0E6D2" stroke="#C9A96A" stroke-width="3"/>
+<text x="1010" y="885" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Compare</text>
+<text x="1010" y="921" text-anchor="middle" font-size="21" fill="#97783A" font-family="'SF Mono', Menlo, monospace">plain JS &#8212; &#916; per criterion</text>
+
+<!-- agree bypass -->
+<path d="M1225 892 L1760 892 Q1780 892 1780 912 L1780 1492 Q1780 1512 1760 1512 L1182 1512"
+      fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="1450" y="872" text-anchor="middle" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">scores agree &#8594; accept as-is</text>
+
+<!-- ADJUDICATE container -->
+<rect x="300" y="1015" width="1400" height="300" rx="30" fill="#DAE8D8" stroke="#6FA37C" stroke-width="3"/>
+<text x="336" y="1283" font-size="21" letter-spacing="2" fill="#5E9070" font-family="'SF Mono', Menlo, monospace">PHASE &#183; ADJUDICATE</text>
+
+<!-- compare -> adjudicator -->
+<path d="M1010 955 L1010 1085" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+<text x="1038" y="998" font-size="22" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">big gap &#8594; escalate</text>
+
+<!-- adjudicator -->
+<rect x="785" y="1095" width="450" height="120" rx="12" fill="#F1F1EB" stroke="#85857D" stroke-width="3"/>
+<text x="1010" y="1147" text-anchor="middle" font-size="31" font-weight="500" fill="#33332F">Adjudicator</text>
+<text x="1010" y="1183" text-anchor="middle" font-size="21" fill="#8A8A80" font-family="'SF Mono', Menlo, monospace">high effort &#8212; rules on the gap</text>
+
+<!-- to Out -->
+<path d="M1010 1215 L1010 1430" fill="none" stroke="#8A8A82" stroke-width="3.5" stroke-dasharray="11 10" marker-end="url(#arr)"/>
+
+<!-- Out -->
+<rect x="850" y="1440" width="320" height="145" rx="16" fill="#F7DCCE" stroke="#C25E3F" stroke-width="3"/>
+<text x="1010" y="1508" text-anchor="middle" font-size="40" font-weight="600" fill="#262624">Out</text>
+<text x="1010" y="1556" text-anchor="middle" font-size="27" font-weight="500" fill="#C25E3F">Final marks + why</text>
+</svg>
