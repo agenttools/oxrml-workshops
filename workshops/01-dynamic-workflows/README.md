@@ -12,6 +12,7 @@ A dynamic workflow is a JavaScript harness that Claude Code writes for your task
 | `diagram-editor/` | A one-file HTML editor for these diagrams, and the prompt that created it. |
 | `explainer/` | A reference page for the Workflow tool, in Simplified Technical English. |
 | `skills/workflow-diagram/` | A Claude Code skill that draws diagrams in this style. |
+| `case-study-diagram-tournament/` | A complete worked run: a knockout + evolve tournament that redesigned John Snow's 1854 cholera map. The workflow script, the brief, all 14 figures, the bracket, and slide-ready PNGs. |
 
 ## How to start
 
