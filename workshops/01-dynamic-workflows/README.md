@@ -6,7 +6,7 @@ A dynamic workflow is a JavaScript harness that Claude Code writes for your task
 
 | Path | What it is |
 |------|-----------|
-| `slides-skills-and-workflows-workshop-1.pdf` | The slides from the workshop. |
+| `slides-skills-explainers-workflows-workshop-1.pdf` | The slides from the workshop. |
 | `prompts.html` | The prompt sheet as a web page. Click a prompt to copy it. This is the digital handout. |
 | `prompts-onepager.pdf` | The same sheet as one page, for print. The LaTeX source is next to it. |
 | `PROMPTS.md` | The same prompts as plain text, readable on GitHub. |
