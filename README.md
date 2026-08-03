@@ -15,7 +15,3 @@ This repository uses ASD-STE100 Simplified Technical English where possible. The
 1. Open the folder for your workshop.
 2. Read its README. It tells you what each file does.
 3. Try the prompts in your own Claude Code session.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
