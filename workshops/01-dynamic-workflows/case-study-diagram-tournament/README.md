@@ -48,16 +48,3 @@ Majority wins. The loser is out. The winner inherits all six critiques and must 
 | Final | **E beats F** | 2–1 |
 
 The champion's best moves were inherited from beaten opponents — colour discipline from the faithful entry, numerator/denominator honesty from the layered-information entry. That is the point of the evolve step.
-
-## Run it yourself
-
-The script needs the Snow dataset as four CSV files (deaths, pumps, streets, daily counts). Get them from the HistData collection:
-
-```sh
-mkdir -p data && cd data
-for f in Snow.deaths Snow.pumps Snow.streets Snow.dates; do
-  curl -sfO "https://vincentarelbundock.github.io/Rdatasets/csv/HistData/$f.csv"
-done
-```
-
-Then edit the `BASE` and `DATA` paths at the top of `snow-knockout.workflow.js` and ask Claude Code to run it with the Workflow tool. To point the same harness at a different subject — we ran it on the Transformer architecture diagram next — swap the `MISSION`, `BRIEFS`, and judge lens texts. The bracket machinery does not change.

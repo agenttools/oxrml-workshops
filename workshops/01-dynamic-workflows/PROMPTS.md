@@ -66,9 +66,6 @@ Patterns you will see: classify-and-act · fan-out-and-synthesize · adversarial
 
 ## Good to know
 
-- Set a limit in the prompt: "use a 200k token budget." The limit is hard.
-- Workflows run in the background. Type `/workflows` to watch.
-- If the run stops, resume the session. Completed agents are not run again.
-- Press `s` in the workflow menu to save a workflow. Share it as a skill.
+- You can suggest how many agents and of what type (e.g. use up to 20 sonnet agents for this, or use sonnet agents for the discsovery layer and fable agents to solve the problem)
+- Workflows run in the background. Type `/workflows` to watch. (As of Aug 3rd 2026 visibility is better in the terminal)
 - Pair with `/loop` for repeated tasks and `/goal` for a hard finish line.
-- Most tasks do not need a workflow. Ask: does this task really need more compute?

@@ -22,19 +22,6 @@ A dynamic workflow is a JavaScript harness that Claude Code writes for your task
 3. Paste it into Claude Code. Change the details to match your project.
 4. Type `/workflows` to watch the run.
 
-## The diagrams
-
-The diagrams show patterns, not products. Diagrams 01–05 show the primitives: adversarial verify, judge panel, loop-until-dry, pipeline vs. barrier, and one composed harness. Diagrams 06–13 apply the primitives to research work: citations, peer review, silent bugs, related work, rubrics, double-marking, experiment loops, and HTML reports.
-
-To change a diagram: open its `.html` file, edit the SVG, and render it again:
-
-```sh
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new \
-  --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
-  --window-size=2000,<HEIGHT> --screenshot=<name>.png <name>.html
-```
-
-The `<HEIGHT>` value must equal the `height` attribute of the SVG.
 
 ## The editor
 
