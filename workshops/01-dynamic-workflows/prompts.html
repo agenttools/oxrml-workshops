@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamic workflows — prompts to try</title>
+<style>
+  :root {
+    --ivory:#FAF9F5; --paper:#FFFFFF; --slate:#141413; --clay:#D97757; --clay-d:#B85C3E;
+    --olive:#5E9070; --gray-100:#F0EEE6; --gray-300:#D1CFC5; --gray-500:#87867F; --gray-700:#3D3D3A;
+    --serif: ui-serif, Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--ivory); color:var(--gray-700); font-family:var(--sans); font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; padding:56px 24px 96px; }
+  .page { max-width:1060px; margin:0 auto; }
+
+  header h1 { font-family:var(--serif); font-weight:500; font-size:clamp(30px,4.5vw,44px); color:var(--slate); letter-spacing:-0.01em; margin-bottom:10px; }
+  header .sub { color:var(--gray-500); max-width:720px; margin-bottom:14px; }
+  header .sub b { color:var(--gray-700); }
+  .patterns { font-family:var(--mono); font-size:11.5px; letter-spacing:0.04em; color:var(--gray-500); border-top:1.5px solid var(--gray-300); border-bottom:1.5px solid var(--gray-300); padding:10px 0; margin:18px 0 34px; }
+
+  .cols { column-count:2; column-gap:36px; }
+  @media (max-width: 860px) { .cols { column-count:1; } }
+
+  section { break-inside:avoid; margin-bottom:34px; }
+  h2 { font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; color:var(--olive); border-bottom:1.5px solid var(--gray-300); padding-bottom:6px; margin-bottom:12px; }
+
+  .prompt { position:relative; background:var(--paper); border:1.5px solid var(--gray-300); border-radius:10px; padding:12px 44px 12px 14px; margin-bottom:10px; font-size:14px; color:var(--gray-700); cursor:pointer; transition:border-color .12s ease, background .12s ease; }
+  .prompt:hover { border-color:var(--clay); }
+  .prompt code { font-family:var(--mono); font-size:12.5px; color:var(--slate); background:var(--gray-100); padding:1px 5px; border-radius:4px; }
+  .prompt .copy { position:absolute; top:8px; right:8px; width:28px; height:28px; border:1.5px solid var(--gray-300); border-radius:8px; background:var(--ivory); cursor:pointer; color:var(--gray-500); font-size:13px; line-height:1; display:flex; align-items:center; justify-content:center; transition:background .12s ease, border-color .12s ease; }
+  .prompt:hover .copy { border-color:var(--clay); color:var(--clay-d); }
+  .prompt.copied { border-color:var(--olive); background:#F4F8F2; }
+  .prompt.copied .copy { border-color:var(--olive); color:var(--olive); }
+
+  .tips { break-inside:avoid; }
+  .tips ul { list-style:none; }
+  .tips li { font-size:13.5px; padding:5px 0 5px 16px; position:relative; }
+  .tips li::before { content:"·"; position:absolute; left:2px; color:var(--olive); font-weight:700; }
+  .tips code { font-family:var(--mono); font-size:12px; background:var(--gray-100); padding:1px 5px; border-radius:4px; color:var(--slate); }
+
+  footer { border-top:1.5px solid var(--gray-300); margin-top:14px; padding-top:14px; font-size:13px; color:var(--gray-500); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  footer a { color:var(--clay-d); text-decoration:none; font-family:var(--mono); font-size:12px; }
+  footer a:hover { text-decoration:underline; }
+
+  #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--slate); color:var(--ivory); font-family:var(--mono); font-size:12.5px; padding:9px 16px; border-radius:999px; transition:transform .18s ease; pointer-events:none; }
+  #toast.show { transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Dynamic workflows — prompts to try</h1>
+    <p class="sub">A workflow is a JavaScript harness that Claude writes for your task. It starts many agents, each with a clean context. Ask for one in your own words, or write <b>ultracode</b>. Click a prompt to copy it. Then change the details to match your project.</p>
+  </header>
+  <div class="patterns">classify-and-act &middot; fan-out-and-synthesize &middot; adversarial verification &middot; generate-and-filter &middot; tournament &middot; loop-until-done</div>
+
+  <div class="cols">
+
+    <section>
+      <h2>Your paper</h2>
+      <div class="prompt">Use a workflow to check each citation in my draft. Read each cited paper. Flag each claim that its source does not support.</div>
+      <div class="prompt">Run a workflow with four reviewers: methodology, missing baselines, statistics, novelty. Rank the criticisms. Give me a fix list.</div>
+      <div class="prompt">Trace each number in my abstract to a table and to the eval script. Flag each number that you cannot trace.</div>
+      <div class="prompt">Go through my draft and verify every technical claim against the codebase with a workflow. I do not want to ship anything wrong.</div>
+    </section>
+
+    <section>
+      <h2>Your code</h2>
+      <div class="prompt">Use a workflow to hunt for silent bugs in my training code: data leakage, eval contamination, masking errors, seed problems. Keep only the bugs that get a failing ten-line test.</div>
+      <div class="prompt">Use a workflow to check each equation in the paper against the function that implements it.</div>
+      <div class="prompt">This test fails maybe 1 in 50 runs. Set up a workflow to reproduce it. Form competing theories about the race. Do not stop until one theory survives the evidence.</div>
+      <div class="prompt">Use a workflow to rename <code>Encoder</code> to <code>Backbone</code> everywhere, one worktree per module, with an adversarial review before merge.</div>
+    </section>
+
+    <section>
+      <h2>Your experiments</h2>
+      <div class="prompt">Run a workflow that tunes my proxy run until val loss is below 2.10 or a 500k token budget is gone. Change one thing per wave. Build an HTML report at the end.</div>
+      <div class="prompt">Why did run 41 diverge? Spawn agents that make hypotheses from the logs, the config, and the data — separately. Then let refuters attack each hypothesis.</div>
+      <div class="prompt">Use a workflow to read this finished sweep and build a one-page HTML explainer: curves, ablations, failure cases.</div>
+    </section>
+
+    <section>
+      <h2>The literature</h2>
+      <div class="prompt">Use a workflow to sweep for related work: by keyword, by author, by citation graph, by venue. Stop when two waves find nothing new.</div>
+      <div class="prompt">Take these 12 papers. Extract the core claims. Show me where the papers disagree, and whether their setups differ.</div>
+      <div class="prompt">Before I adopt this benchmark, use a workflow to check for contamination reports, label errors, and saturation.</div>
+    </section>
+
+    <section>
+      <h2>Judging with a rubric</h2>
+      <div class="prompt">Here is my rubric. Score my chapter with one judge per criterion. Each score must cite evidence from the text.</div>
+      <div class="prompt">Have two agents mark each submission blind against the rubric. Escalate only the criteria where they disagree.</div>
+      <div class="prompt">Sort these 200 error cases by severity with a tournament of pairwise judges.</div>
+      <div class="prompt">Interview me with AskUserQuestion to build a rubric first. Then rank these 80 outputs against it and double-check the top ten.</div>
+    </section>
+
+    <section>
+      <h2>Taste and exploration</h2>
+      <div class="prompt">I need a name for this method. Use a workflow to brainstorm many options and run a tournament to pick the top 3.</div>
+      <div class="prompt">Tear my research statement apart from an advisor's, a Reviewer-2's, and a grant panel's perspective.</div>
+      <div class="prompt">Quick workflow: adversarially check the assumption I just made.</div>
+    </section>
+
+    <section>
+      <h2>Build your own tools</h2>
+      <div class="prompt">Create a single HTML tool where I can manually make diagrams like this. Seed it with one of the workflows. Let me move the nodes, edit the text, and add more nodes.</div>
+      <div class="prompt">Create a global skill that makes diagrams in this exact style, so any future session can draw one.</div>
+    </section>
+
+    <section class="tips">
+      <h2>Good to know</h2>
+      <ul>
+        <li>Set a limit in the prompt: “use a 200k token budget.” The limit is hard.</li>
+        <li>Workflows run in the background. Type <code>/workflows</code> to watch.</li>
+        <li>If the run stops, resume the session. Completed agents are not run again.</li>
+        <li>Press <code>s</code> in the workflow menu to save a workflow. Share it as a skill.</li>
+        <li>Pair with <code>/loop</code> for repeated tasks and <code>/goal</code> for a hard finish line.</li>
+        <li>Most tasks do not need a workflow. Ask: does this task really need more compute?</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer>
+    <span>Why this works: one context window must plan and do the work. Long tasks cause laziness, self-preference, and goal drift. A workflow gives each agent one small goal and a clean context.</span>
+    <a href="https://github.com/agenttools/oxrml-workshops">github.com/agenttools/oxrml-workshops</a>
+  </footer>
+</div>
+
+<div id="toast">Copied</div>
+
+<script>
+'use strict';
+const toast = document.getElementById('toast');
+let toastTimer = null;
+
+document.querySelectorAll('.prompt').forEach(card => {
+  const btn = document.createElement('button');
+  btn.className = 'copy';
+  btn.setAttribute('aria-label', 'Copy prompt');
+  btn.textContent = '⧉';
+  card.appendChild(btn);
+
+  const copy = () => {
+    const text = card.cloneNode(true);
+    text.querySelector('.copy').remove();
+    const str = text.textContent.replace(/\s+/g, ' ').trim();
+    const done = ok => {
+      if (!ok) return;
+      card.classList.add('copied');
+      btn.textContent = '✓';
+      setTimeout(() => { card.classList.remove('copied'); btn.textContent = '⧉'; }, 1200);
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1200);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(str).then(() => done(true), () => done(fallback(str)));
+    } else {
+      done(fallback(str));
+    }
+  };
+  const fallback = str => {
+    const ta = document.createElement('textarea');
+    ta.value = str; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch {}
+    ta.remove();
+    return ok;
+  };
+  card.addEventListener('click', copy);
+});
+</script>
+</body>
+</html>

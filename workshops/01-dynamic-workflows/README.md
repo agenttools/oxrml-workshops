@@ -6,8 +6,9 @@ A dynamic workflow is a JavaScript harness that Claude Code writes for your task
 
 | Path | What it is |
 |------|-----------|
-| `prompts-onepager.pdf` | A one-page prompt sheet. Print it. The LaTeX source is next to it. |
-| `PROMPTS.md` | The same prompts as text. Copy them into your terminal. |
+| `prompts.html` | The prompt sheet as a web page. Click a prompt to copy it. This is the digital handout. |
+| `prompts-onepager.pdf` | The same sheet as one page, for print. The LaTeX source is next to it. |
+| `PROMPTS.md` | The same prompts as plain text, readable on GitHub. |
 | `diagrams/` | 13 workflow-pattern diagrams. Each PNG has its HTML source next to it. |
 | `diagram-editor/` | A one-file HTML editor for these diagrams, and the prompt that created it. |
 | `explainer/` | A reference page for the Workflow tool, in Simplified Technical English. |
