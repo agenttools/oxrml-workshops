@@ -66,6 +66,6 @@ Patterns you will see: classify-and-act · fan-out-and-synthesize · adversarial
 
 ## Good to know
 
-- You can suggest how many agents and of what type (e.g. use up to 20 sonnet agents for this, or use sonnet agents for the discsovery layer and fable agents to solve the problem)
+- You can suggest how many agents and of what type (e.g. use up to 20 sonnet agents for this, or use sonnet agents for the discovery layer and fable agents to solve the problem)
 - Workflows run in the background. Type `/workflows` to watch. (As of Aug 3rd 2026 visibility is better in the terminal)
 - Pair with `/loop` for repeated tasks and `/goal` for a hard finish line.
